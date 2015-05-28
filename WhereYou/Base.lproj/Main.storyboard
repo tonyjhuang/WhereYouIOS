@@ -13,12 +13,21 @@
                         <viewControllerLayoutGuide type="bottom" id="g9x-nE-yfG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="X3W-3y-o4p">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bFe-Ip-s9i">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="600"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9QJ-Lj-zSp">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="1" green="0.75686274509803919" blue="0.027450980392156862" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <variation key="heightClass=regular" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="756" width="600" height="44"/>
+                                </variation>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bFe-Ip-s9i">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="740" id="C7E-7n-fol"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="88" id="LZi-6K-E8T" customClass="MainTableViewCell" customModule="WhereYou" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -66,42 +75,75 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="C7E-7n-fol"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="20" width="600" height="736"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="C7E-7n-fol"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="NhL-dS-gPV" id="PAJ-Vo-xTJ"/>
+                                    <outlet property="delegate" destination="NhL-dS-gPV" id="B04-RR-3Xh"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bFe-Ip-s9i" firstAttribute="leading" secondItem="X3W-3y-o4p" secondAttribute="leading" id="Jot-62-uoy"/>
-                            <constraint firstAttribute="trailing" secondItem="bFe-Ip-s9i" secondAttribute="trailing" id="Lj7-NA-dNR"/>
-                            <constraint firstItem="bFe-Ip-s9i" firstAttribute="bottom" secondItem="g9x-nE-yfG" secondAttribute="top" id="QDR-MR-ess"/>
-                            <constraint firstItem="bFe-Ip-s9i" firstAttribute="top" secondItem="k5K-qy-IWh" secondAttribute="bottom" id="qyg-fW-r7B"/>
+                            <constraint firstItem="9QJ-Lj-zSp" firstAttribute="top" secondItem="bFe-Ip-s9i" secondAttribute="bottom" id="64m-LF-tWc"/>
+                            <constraint firstItem="9QJ-Lj-zSp" firstAttribute="leading" secondItem="X3W-3y-o4p" secondAttribute="leading" id="ATx-Ql-N1o"/>
+                            <constraint firstItem="9QJ-Lj-zSp" firstAttribute="bottom" secondItem="g9x-nE-yfG" secondAttribute="top" id="Sb8-BD-YPQ"/>
+                            <constraint firstItem="bFe-Ip-s9i" firstAttribute="top" secondItem="k5K-qy-IWh" secondAttribute="bottom" id="YoN-nZ-DzK"/>
+                            <constraint firstItem="9QJ-Lj-zSp" firstAttribute="trailing" secondItem="bFe-Ip-s9i" secondAttribute="trailing" id="cDs-1t-1N1"/>
+                            <constraint firstItem="9QJ-Lj-zSp" firstAttribute="leading" secondItem="bFe-Ip-s9i" secondAttribute="leading" id="lZu-wm-PCM"/>
+                            <constraint firstAttribute="trailing" secondItem="bFe-Ip-s9i" secondAttribute="trailing" id="pCv-Hh-7MJ"/>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="9QJ-Lj-zSp"/>
+                            </mask>
                             <mask key="constraints">
-                                <exclude reference="Jot-62-uoy"/>
-                                <exclude reference="Lj7-NA-dNR"/>
-                                <exclude reference="QDR-MR-ess"/>
-                                <exclude reference="qyg-fW-r7B"/>
+                                <exclude reference="64m-LF-tWc"/>
+                                <exclude reference="ATx-Ql-N1o"/>
+                                <exclude reference="Sb8-BD-YPQ"/>
+                                <exclude reference="cDs-1t-1N1"/>
+                                <exclude reference="lZu-wm-PCM"/>
+                                <exclude reference="YoN-nZ-DzK"/>
+                                <exclude reference="pCv-Hh-7MJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="9QJ-Lj-zSp"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="Jot-62-uoy"/>
-                                <include reference="Lj7-NA-dNR"/>
-                                <include reference="QDR-MR-ess"/>
-                                <include reference="qyg-fW-r7B"/>
+                                <include reference="64m-LF-tWc"/>
+                                <include reference="ATx-Ql-N1o"/>
+                                <include reference="Sb8-BD-YPQ"/>
+                                <include reference="cDs-1t-1N1"/>
+                                <include reference="lZu-wm-PCM"/>
+                                <include reference="YoN-nZ-DzK"/>
+                                <include reference="pCv-Hh-7MJ"/>
                             </mask>
                         </variation>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="800"/>
                     <connections>
                         <outlet property="tableView" destination="bFe-Ip-s9i" id="EU2-mj-sZY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v7M-iz-6Cv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-74" y="211.5"/>
+            <point key="canvasLocation" x="-75" y="211.5"/>
         </scene>
     </scenes>
 </document>

@@ -8,20 +8,14 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
   
   @IBOutlet weak var tableView: UITableView!
   
-  var friends = [String]()
+  var friends = ["gary", "gasper", "david", "gimmi"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    friends = ParseHelper.sharedInstance.getFriends()
-    // Do any additional setup after loading the view, typically from a nib.
-    //tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-    //var customTableViewCellNib = UINib(nibName: "MainTableViewCell", bundle: nil)
-    //tableView.registerNib(customTableViewCellNib, forCellReuseIdentifier: "cell")
-    //tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
   }
 
   override func didReceiveMemoryWarning() {
@@ -36,9 +30,14 @@ class MainViewController: UIViewController, UITableViewDataSource {
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MainTableViewCell
     cell.setFriend(friends[indexPath.row])
+    
     return cell
   }
 
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    println("selected \(friends[indexPath.row])")
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  }
 }
 
 class MainTableViewCell: UITableViewCell {
@@ -47,6 +46,12 @@ class MainTableViewCell: UITableViewCell {
   
   func setFriend(friend: String) {
     label.text = friend
+    label.textColor = UIColor.whiteColor()
+    label.backgroundColor = UIColor.getRandomColor(friend)
+    
+  }
+  func onCellClicked(recognizer: UITapGestureRecognizer) {
+
   }
 }
 
