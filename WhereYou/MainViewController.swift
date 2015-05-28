@@ -16,6 +16,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.CYAN_ACCENT)
   }
 
   override func didReceiveMemoryWarning() {

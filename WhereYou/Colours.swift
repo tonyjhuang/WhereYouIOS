@@ -47,10 +47,7 @@ extension UIColor {
     YELLOW_ACCENT,
     AMBER_ACCENT,
     ORANGE_ACCENT,
-    DEEP_ORANGE_ACCENT,
-    BROWN_ACCENT,
-    GREY_ACCENT,
-    BLUE_GREY_ACCENT
+    DEEP_ORANGE_ACCENT
   ]
   
   class func UIColorFromRGB(rgbValue: UInt32) -> UIColor {
