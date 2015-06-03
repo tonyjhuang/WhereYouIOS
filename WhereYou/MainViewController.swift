@@ -31,7 +31,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MainTableViewCell
     cell.setFriend(friends[indexPath.row])
-    
+    cell.selectionStyle = UITableViewCellSelectionStyle.None
     return cell
   }
 

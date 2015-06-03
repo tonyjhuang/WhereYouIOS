@@ -81,14 +81,11 @@
 		EA30B87B1AFFE35D0081AA98 /* WhereYou */ = {
 			isa = PBXGroup;
 			children = (
-				EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */,
 				EA30B8801AFFE35D0081AA98 /* MainViewController.swift */,
 				EA30B8821AFFE35D0081AA98 /* Main.storyboard */,
-				EA30B8851AFFE35D0081AA98 /* Images.xcassets */,
-				EA30B8871AFFE35D0081AA98 /* LaunchScreen.xib */,
-				EA30B87C1AFFE35D0081AA98 /* Supporting Files */,
 				EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */,
 				EA4A5A691B176086006AA23F /* Colours.swift */,
+				EA30B87C1AFFE35D0081AA98 /* Supporting Files */,
 			);
 			path = WhereYou;
 			sourceTree = "<group>";
@@ -96,6 +93,9 @@
 		EA30B87C1AFFE35D0081AA98 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */,
+				EA30B8851AFFE35D0081AA98 /* Images.xcassets */,
+				EA30B8871AFFE35D0081AA98 /* LaunchScreen.xib */,
 				EA30B87D1AFFE35D0081AA98 /* Info.plist */,
 			);
 			name = "Supporting Files";
