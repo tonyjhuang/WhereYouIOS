@@ -12,7 +12,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
-      tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.C)
+      tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.CYAN_ACCENT)
     }
   }
   
