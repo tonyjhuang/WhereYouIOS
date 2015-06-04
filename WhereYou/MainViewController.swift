@@ -13,6 +13,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   @IBOutlet weak var tableView: UITableView! {
     didSet {
       tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.CYAN_ACCENT)
+      
+      // set gesture recognizers
+      let gesture = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
+      gesture.minimumPressDuration = 0.5 // seconds
+      tableView.addGestureRecognizer(gesture)
+      tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTap:"))
     }
   }
   
@@ -22,7 +28,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   var defaults = NSUserDefaults.standardUserDefaults()
-  var editMode = false
+  var editMode = false {
+    didSet { tableView?.reloadData() }
+  }
   
   var friends: [String] {
     get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? Constants.Friends }
@@ -33,7 +41,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   var addFriendCell: AddFriendTableViewCell?
-
+  
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return friends.count + 1
   }
@@ -42,9 +50,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var cell: UITableViewCell
     if indexPath.row < friends.count {
       cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-      (cell as! MainTableViewCell).setFriend(friends[indexPath.row])
-      (cell as! MainTableViewCell).delegate = self
-    } else {
+      if let friendCell = cell as? MainTableViewCell {
+        friendCell.setFriend(friends[indexPath.row])
+        friendCell.setEditMode(editMode)
+        friendCell.delegate = self
+      }
+    } else { // throw AddFriend row into end of the tableview.
       cell = tableView.dequeueReusableCellWithIdentifier("addfriend") as! UITableViewCell
       addFriendCell = cell as? AddFriendTableViewCell
       addFriendCell?.delegate = self
@@ -53,13 +64,36 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     cell.selectionStyle = .None
     return cell
   }
-
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.row < friends.count {
-      println("selected \(friends[indexPath.row])")
+  
+  // Handle long press on tableview
+  func onLongPress(gesture: UILongPressGestureRecognizer) {
+    // start editmode if user is long clicking on row.
+    let point: CGPoint = gesture.locationInView(tableView)
+    if let indexPath = tableView.indexPathForRowAtPoint(point) {
+      if gesture.state == .Began {
+        editMode = !editMode
+      }
     }
-    
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  }
+  
+  // Handle tap anywhere on tableview
+  func onTap(gesture: UITapGestureRecognizer) {
+    let point: CGPoint = gesture.locationInView(tableView)
+    if let indexPath = tableView.indexPathForRowAtPoint(point){ // tapped friend row
+      if let friendCell = tableView.cellForRowAtIndexPath(indexPath) as? MainTableViewCell {
+        println("selected \(friendCell.label.text!)")
+        addFriendCell?.showInput(false)
+        if editMode {
+          editMode = false
+        } else {
+          // TODO: parse stuff
+          
+        }
+      }
+    } else { // tableview (no row)
+      println("selected tableview background")
+      addFriendCell?.showInput(false)
+    }
   }
   
   func addFriend(friend: String) {
@@ -98,6 +132,10 @@ class MainTableViewCell: UITableViewCell {
   
   func onDeleteTap(gesture: UITapGestureRecognizer) {
     delegate?.deleteFriend(label.text!)
+  }
+  
+  func setEditMode(editing: Bool) {
+    delete.hidden = !editing
   }
 }
 
