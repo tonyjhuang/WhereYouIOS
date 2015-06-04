@@ -10,33 +10,45 @@ import UIKit
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
   
-  @IBOutlet weak var tableView: UITableView!
-  
-  var friends = ["gary", "gasper", "david", "gimmi"]
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.CYAN_ACCENT)
+  @IBOutlet weak var tableView: UITableView! {
+    didSet {
+      tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.CYAN_ACCENT)
+    }
   }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  
+  private struct Constants {
+    static let DefaultsKey = "MainViewController.friends"
+  }
+  
+  var defaults = NSUserDefaults.standardUserDefaults()
+  
+  var friends: [String] {
+    get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? [] }
+    set { defaults.setObject(newValue, forKey: Constants.DefaultsKey) }
   }
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return friends.count
+    return friends.count + 1
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MainTableViewCell
-    cell.setFriend(friends[indexPath.row])
+    var cell: UITableViewCell
+    if indexPath.row < friends.count {
+      cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+      (cell as! MainTableViewCell).setFriend(friends[indexPath.row])
+    } else {
+      cell = tableView.dequeueReusableCellWithIdentifier("addfriend") as! AddFriendTableViewCell
+    }
     cell.selectionStyle = UITableViewCellSelectionStyle.None
     return cell
   }
 
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    println("selected \(friends[indexPath.row])")
+    if indexPath.row < friends.count {
+      println("selected \(friends[indexPath.row])")
+    } else if indexPath.row == friends.count {
+      println("selected add friend")
+    }
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 }
@@ -54,6 +66,10 @@ class MainTableViewCell: UITableViewCell {
   func onCellClicked(recognizer: UITapGestureRecognizer) {
 
   }
+}
+
+class AddFriendTableViewCell: UITableViewCell {
+  
 }
 
 
