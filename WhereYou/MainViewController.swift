@@ -21,6 +21,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTap:"))
     }
   }
+  
+  @IBOutlet weak var nameLabel: UILabel! {
+    didSet {
+        nameLabel.text = "Hello, \(parse.name)."
+    }
+  }
+  
+  
   var editMode = false {
     didSet { tableView?.reloadData() }
   }
