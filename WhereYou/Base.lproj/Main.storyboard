@@ -101,7 +101,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFd-1Q-XJl">
-                                                    <rect key="frame" x="184" y="12" width="33" height="65"/>
+                                                    <rect key="frame" x="184" y="6" width="33" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="31" id="y9H-yC-msi"/>
                                                     </constraints>
@@ -124,7 +124,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3MV-lU-W5y" firstAttribute="centerY" secondItem="cFd-1Q-XJl" secondAttribute="centerY" id="25e-un-h7J"/>
-                                                <constraint firstAttribute="centerY" secondItem="cFd-1Q-XJl" secondAttribute="centerY" id="3eG-CO-M5i"/>
+                                                <constraint firstAttribute="centerY" secondItem="cFd-1Q-XJl" secondAttribute="centerY" constant="6" id="3eG-CO-M5i"/>
                                                 <constraint firstItem="cFd-1Q-XJl" firstAttribute="centerX" secondItem="MAt-zC-sMA" secondAttribute="centerX" id="AT4-Cv-uG6"/>
                                                 <constraint firstAttribute="centerY" secondItem="3MV-lU-W5y" secondAttribute="centerY" id="H4a-Vp-jn4"/>
                                                 <constraint firstItem="3MV-lU-W5y" firstAttribute="centerX" secondItem="cFd-1Q-XJl" secondAttribute="centerX" id="SmT-88-Ded"/>

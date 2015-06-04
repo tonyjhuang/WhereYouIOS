@@ -92,6 +92,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       }
     } else { // tableview (no row)
       println("selected tableview background")
+      editMode = false
       addFriendCell?.showInput(false)
     }
   }
