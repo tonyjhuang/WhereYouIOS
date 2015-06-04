@@ -17,12 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="redraw" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bFe-Ip-s9i">
+                            <tableView clipsSubviews="YES" contentMode="redraw" ambiguous="YES" misplaced="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bFe-Ip-s9i">
                                 <rect key="frame" x="0.0" y="20" width="400" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="740" id="C7E-7n-fol"/>
-                                    <constraint firstAttribute="height" constant="300" id="ZxX-NR-eG1"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="ZxX-NR-eG1"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="88" id="LZi-6K-E8T" customClass="MainTableViewCell" customModule="WhereYou" customModuleProvider="target">
@@ -102,16 +102,30 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
+                                                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3MV-lU-W5y">
+                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="88"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="3MV-lU-W5y" firstAttribute="centerY" secondItem="cFd-1Q-XJl" secondAttribute="centerY" id="25e-un-h7J"/>
                                                 <constraint firstAttribute="centerY" secondItem="cFd-1Q-XJl" secondAttribute="centerY" id="3eG-CO-M5i"/>
                                                 <constraint firstItem="cFd-1Q-XJl" firstAttribute="centerX" secondItem="MAt-zC-sMA" secondAttribute="centerX" id="AT4-Cv-uG6"/>
+                                                <constraint firstAttribute="centerY" secondItem="3MV-lU-W5y" secondAttribute="centerY" id="H4a-Vp-jn4"/>
+                                                <constraint firstItem="3MV-lU-W5y" firstAttribute="centerX" secondItem="cFd-1Q-XJl" secondAttribute="centerX" id="SmT-88-Ded"/>
+                                                <constraint firstItem="3MV-lU-W5y" firstAttribute="top" secondItem="MAt-zC-sMA" secondAttribute="top" id="aqj-NY-yhT"/>
+                                                <constraint firstAttribute="centerX" secondItem="3MV-lU-W5y" secondAttribute="centerX" id="iJ2-1d-I2d"/>
+                                                <constraint firstItem="3MV-lU-W5y" firstAttribute="leading" secondItem="MAt-zC-sMA" secondAttribute="leading" id="tW6-8z-9hp"/>
                                                 <constraint firstAttribute="centerX" secondItem="cFd-1Q-XJl" secondAttribute="centerX" id="xyx-pi-QTn"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="cFd-1Q-XJl" secondAttribute="bottom" constant="17" id="y3A-6N-pE1"/>
                                                 <constraint firstItem="cFd-1Q-XJl" firstAttribute="top" secondItem="MAt-zC-sMA" secondAttribute="topMargin" constant="14" id="ymg-Je-6wv"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="25e-un-h7J"/>
+                                                    <exclude reference="SmT-88-Ded"/>
                                                     <exclude reference="xyx-pi-QTn"/>
                                                     <exclude reference="y3A-6N-pE1"/>
                                                     <exclude reference="ymg-Je-6wv"/>
@@ -120,6 +134,10 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
+                                        <connections>
+                                            <outlet property="input" destination="3MV-lU-W5y" id="vt3-Ex-NZZ"/>
+                                            <outlet property="label" destination="cFd-1Q-XJl" id="xa7-bQ-icw"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <variation key="default">

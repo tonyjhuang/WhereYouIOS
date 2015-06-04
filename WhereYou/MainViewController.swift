@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate{
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -25,8 +25,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   var friends: [String] {
     get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? Constants.Friends }
-    set { defaults.setObject(newValue, forKey: Constants.DefaultsKey) }
+    set {
+      defaults.setObject(newValue, forKey: Constants.DefaultsKey)
+      tableView?.reloadData()
+    }
   }
+  
+  var addFriendCell: AddFriendTableViewCell?
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return friends.count + 1
@@ -38,19 +43,29 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
       (cell as! MainTableViewCell).setFriend(friends[indexPath.row])
     } else {
-      cell = tableView.dequeueReusableCellWithIdentifier("addfriend") as! AddFriendTableViewCell
+      cell = tableView.dequeueReusableCellWithIdentifier("addfriend") as! UITableViewCell
+      addFriendCell = cell as? AddFriendTableViewCell
+      addFriendCell?.delegate = self
     }
-    cell.selectionStyle = UITableViewCellSelectionStyle.None
+    // Don't highlight tableview cells
+    cell.selectionStyle = .None
     return cell
   }
 
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     if indexPath.row < friends.count {
       println("selected \(friends[indexPath.row])")
-    } else if indexPath.row == friends.count {
-      println("selected add friend")
     }
+    
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  }
+  
+  func addFriend(friend: String) {
+    if let cell = addFriendCell {
+      cell.showInput(false)
+    }
+    
+    friends += [friend]
   }
 }
 
@@ -69,15 +84,49 @@ class MainTableViewCell: UITableViewCell {
   }
 }
 
-class AddFriendTableViewCell: UITableViewCell {
+protocol AddFriendDelegate: class {
+  func addFriend(friend: String)
+}
+
+class AddFriendTableViewCell: UITableViewCell, UITextFieldDelegate {
+  
+  @IBOutlet weak var label: UILabel!
+  
+  @IBOutlet weak var input: UITextField! {
+    didSet {
+      input.delegate = self
+    }
+  }
+  
+  weak var delegate: AddFriendDelegate?
+  
   override func awakeFromNib() {
-    println("test?")
+    // Add tap gesture
     var gesture = UITapGestureRecognizer(target: self, action: "onTap:")
     contentView.addGestureRecognizer(gesture)
   }
   
   func onTap(gesture: UITapGestureRecognizer) {
     println("tap!")
+    showInput(true)
+  }
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    if delegate != nil {
+      delegate!.addFriend(input.text)
+    }
+    return false
+  }
+  
+  func showInput(show: Bool) {
+    label.hidden = show
+    input.hidden = !show
+    if show {
+      input.becomeFirstResponder()
+    } else {
+      input.resignFirstResponder()
+      input.text = ""
+    }
   }
 }
 
