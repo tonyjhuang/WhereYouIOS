@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate{
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -22,6 +22,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   var defaults = NSUserDefaults.standardUserDefaults()
+  var editMode = false
   
   var friends: [String] {
     get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? Constants.Friends }
@@ -42,6 +43,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     if indexPath.row < friends.count {
       cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
       (cell as! MainTableViewCell).setFriend(friends[indexPath.row])
+      (cell as! MainTableViewCell).delegate = self
     } else {
       cell = tableView.dequeueReusableCellWithIdentifier("addfriend") as! UITableViewCell
       addFriendCell = cell as? AddFriendTableViewCell
@@ -67,20 +69,35 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     friends += [friend]
   }
+  
+  func deleteFriend(friend: String) {
+    if let index = find(friends, friend) {
+      friends.removeAtIndex(index)
+    }
+  }
+}
+
+protocol MainTableViewCellDelegate: class {
+  func deleteFriend(friend: String)
 }
 
 class MainTableViewCell: UITableViewCell {
   
   @IBOutlet weak var label: UILabel!
+  @IBOutlet weak var delete: UIImageView!
+  
+  weak var delegate: MainTableViewCellDelegate?
   
   func setFriend(friend: String) {
     label.text = friend
     label.textColor = UIColor.whiteColor()
     label.backgroundColor = UIColor.getRandomColor(friend)
-    
+    delete.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onDeleteTap:"))
+    delete.userInteractionEnabled = true
   }
-  func onCellClicked(recognizer: UITapGestureRecognizer) {
-
+  
+  func onDeleteTap(gesture: UITapGestureRecognizer) {
+    delegate?.deleteFriend(label.text!)
   }
 }
 
@@ -107,7 +124,6 @@ class AddFriendTableViewCell: UITableViewCell, UITextFieldDelegate {
   }
   
   func onTap(gesture: UITapGestureRecognizer) {
-    println("tap!")
     showInput(true)
   }
   
