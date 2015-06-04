@@ -18,12 +18,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   private struct Constants {
     static let DefaultsKey = "MainViewController.friends"
+    static let Friends = ["gary", "gasper", "allison"]
   }
   
   var defaults = NSUserDefaults.standardUserDefaults()
   
   var friends: [String] {
-    get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? [] }
+    get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? Constants.Friends }
     set { defaults.setObject(newValue, forKey: Constants.DefaultsKey) }
   }
 
@@ -69,7 +70,15 @@ class MainTableViewCell: UITableViewCell {
 }
 
 class AddFriendTableViewCell: UITableViewCell {
+  override func awakeFromNib() {
+    println("test?")
+    var gesture = UITapGestureRecognizer(target: self, action: "onTap:")
+    contentView.addGestureRecognizer(gesture)
+  }
   
+  func onTap(gesture: UITapGestureRecognizer) {
+    println("tap!")
+  }
 }
 
 
