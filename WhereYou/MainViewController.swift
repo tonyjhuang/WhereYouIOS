@@ -21,37 +21,24 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onTap:"))
     }
   }
-  
-  private struct Constants {
-    static let DefaultsKey = "MainViewController.friends"
-    static let Friends = ["gary", "gasper", "allison"]
-  }
-  
-  var defaults = NSUserDefaults.standardUserDefaults()
   var editMode = false {
     didSet { tableView?.reloadData() }
   }
   
-  var friends: [String] {
-    get { return defaults.objectForKey(Constants.DefaultsKey) as? [String] ?? Constants.Friends }
-    set {
-      defaults.setObject(newValue, forKey: Constants.DefaultsKey)
-      tableView?.reloadData()
-    }
-  }
+  let parse: ParseHelper = ParseHelper.sharedInstance
   
   var addFriendCell: AddFriendTableViewCell?
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return friends.count + 1
+    return parse.friends.count + 1
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell: UITableViewCell
-    if indexPath.row < friends.count {
+    if indexPath.row < parse.friends.count {
       cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
       if let friendCell = cell as? MainTableViewCell {
-        friendCell.setFriend(friends[indexPath.row])
+        friendCell.setFriend(parse.friends[indexPath.row])
         friendCell.setEditMode(editMode)
         friendCell.delegate = self
       }
@@ -102,13 +89,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       cell.showInput(false)
     }
     
-    friends += [friend]
+    parse.friends += [friend]
+    tableView.reloadData()
   }
   
   func deleteFriend(friend: String) {
-    if let index = find(friends, friend) {
-      friends.removeAtIndex(index)
-    }
+    parse.removeFriend(friend)
+    tableView.reloadData()
   }
 }
 

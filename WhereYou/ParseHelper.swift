@@ -22,11 +22,36 @@ class ParseHelper {
     return Static.instance!
   }
   
-  
-  let friends = ["Friend 1", "Friend 2", "Friend 3", "Friend 4"]
-  
-  func getFriends() -> [String] {
-    return friends
+  private struct Constants {
+    static let FriendsKey = "ParseHelper.friends"
+    static let FriendsDefaultValue = ["gary", "gasper", "allison", "kevin"]
+    static let NameKey = "ParseHelper.name"
+    static let NameDefaultValue = "tony"
   }
-
+  
+  private let defaults = NSUserDefaults.standardUserDefaults()
+  
+  var friends: [String] {
+    get {
+      return defaults.objectForKey(Constants.FriendsKey) as? [String] ?? Constants.FriendsDefaultValue
+    }
+    set {
+      defaults.setObject(newValue, forKey: Constants.FriendsKey)
+    }
+  }
+  
+  var name: String {
+    get {
+      return defaults.objectForKey(Constants.NameKey) as? String ?? Constants.NameDefaultValue
+    }
+    set {
+      defaults.setObject(newValue, forKey: Constants.NameKey)
+    }
+  }
+  
+  func removeFriend(friend: String) {
+    if let index = find(friends, friend) {
+      friends.removeAtIndex(index)
+    }
+  }
 }
