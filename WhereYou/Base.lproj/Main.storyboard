@@ -247,6 +247,7 @@
                     <size key="freeformSize" width="400" height="800"/>
                     <connections>
                         <outlet property="nameLabel" destination="yzc-VN-toM" id="EP4-mO-K6B"/>
+                        <outlet property="nameLabelContainer" destination="R5q-MX-UvR" id="8AS-qZ-zPg"/>
                         <outlet property="tableView" destination="bFe-Ip-s9i" id="EU2-mj-sZY"/>
                     </connections>
                 </viewController>

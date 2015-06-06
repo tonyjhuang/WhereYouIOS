@@ -22,6 +22,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
   }
   
+  @IBOutlet weak var nameLabelContainer: UIView!
   @IBOutlet weak var nameLabel: UILabel! {
     didSet {
         nameLabel.text = "Hello, \(parse.name)."
@@ -36,6 +37,42 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   let parse: ParseHelper = ParseHelper.sharedInstance
   
   var addFriendCell: AddFriendTableViewCell?
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    NSNotificationCenter.defaultCenter().addObserver(self,
+      selector: "keyboardWillShow:",
+      name: UIKeyboardWillShowNotification,
+      object: nil)
+    
+    NSNotificationCenter.defaultCenter().addObserver(self,
+      selector: "keyboardWillHide:",
+      name: UIKeyboardWillHideNotification,
+      object: nil)
+  }
+  
+  func keyboardWillShow(note: NSNotification) {
+    if let userInfo = note.userInfo {
+      if let keyboardFrameBeginRect: CGRect = userInfo[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue() {
+        let keyboardHeight = keyboardFrameBeginRect.size.height
+        let nameLabelContainerHeight = nameLabelContainer.frame.size.height
+        println("\(keyboardHeight)")
+        tableView.contentInset = UIEdgeInsets(top: 0,
+          left: 0,
+          bottom: keyboardHeight - nameLabelContainerHeight,
+          right: 0)
+      }
+    }
+  }
+  
+  func keyboardWillHide(note: NSNotification) {
+    tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return parse.friends.count + 1
