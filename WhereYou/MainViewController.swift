@@ -12,8 +12,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
-      tableView.backgroundColor = UIColor.UIColorFromRGB(UIColor.CYAN_ACCENT)
-      
       // set gesture recognizers
       let gesture = UILongPressGestureRecognizer(target: self, action: "onLongPress:")
       gesture.minimumPressDuration = 0.5 // seconds
