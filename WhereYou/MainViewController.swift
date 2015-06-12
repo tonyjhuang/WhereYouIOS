@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverPresentationControllerDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -38,6 +38,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   var addFriendCell: AddFriendTableViewCell?
   
+  private struct Constants {
+    static let MapSegueIdentifier = "Show Map"
+  }
+  
+  /**
+   * Manage scrolling for keyboard.
+   */
+  
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     
@@ -54,10 +62,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   func keyboardWillShow(note: NSNotification) {
     if let userInfo = note.userInfo {
-      if let keyboardFrameBeginRect: CGRect = userInfo[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue() {
+      if let keyboardFrameBeginRect: CGRect = userInfo[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue {
         let keyboardHeight = keyboardFrameBeginRect.size.height
         let nameLabelContainerHeight = nameLabelContainer.frame.size.height
-        println("\(keyboardHeight)")
+        print("\(keyboardHeight)")
         tableView.contentInset = UIEdgeInsets(top: 0,
           left: 0,
           bottom: keyboardHeight - nameLabelContainerHeight,
@@ -74,6 +82,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
+  /**
+   * Prepare tableView data.
+   */
+  
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return parse.friends.count + 1
   }
@@ -81,14 +93,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell: UITableViewCell
     if indexPath.row < parse.friends.count {
-      cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+      cell = tableView.dequeueReusableCellWithIdentifier("cell")!
       if let friendCell = cell as? MainTableViewCell {
         friendCell.setFriend(parse.friends[indexPath.row])
         friendCell.setEditMode(editMode)
         friendCell.delegate = self
       }
     } else { // throw AddFriend row into end of the tableview.
-      cell = tableView.dequeueReusableCellWithIdentifier("addfriend") as! UITableViewCell
+      cell = tableView.dequeueReusableCellWithIdentifier("addfriend")!
       addFriendCell = cell as? AddFriendTableViewCell
       addFriendCell?.delegate = self
     }
@@ -97,11 +109,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     return cell
   }
   
+  /**
+   * Gestures
+   */
+  
   // Handle long press on tableview
   func onLongPress(gesture: UILongPressGestureRecognizer) {
     // start editmode if user is long clicking on row.
     let point: CGPoint = gesture.locationInView(tableView)
-    if let indexPath = tableView.indexPathForRowAtPoint(point) {
+    if let _ = tableView.indexPathForRowAtPoint(point) {
       if gesture.state == .Began {
         editMode = !editMode
       }
@@ -113,7 +129,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let point: CGPoint = gesture.locationInView(tableView)
     if let indexPath = tableView.indexPathForRowAtPoint(point){ // tapped friend row
       if let friendCell = tableView.cellForRowAtIndexPath(indexPath) as? MainTableViewCell {
-        println("selected \(friendCell.label.text!)")
+        print("selected \(friendCell.label.text!)")
         addFriendCell?.showInput(false)
         if editMode {
           editMode = false
@@ -123,12 +139,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
       }
     } else { // tableview (no row)
-      println("selected tableview background")
+      print("selected tableview background")
       editMode = false
       addFriendCell?.showInput(false)
     }
   }
   
+  /**
+   * Modify Friends list 
+   */
   func addFriend(friend: String) {
     if let cell = addFriendCell {
       cell.showInput(false)
@@ -141,6 +160,34 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   func deleteFriend(friend: String) {
     parse.removeFriend(friend)
     tableView.reloadData()
+  }
+  
+  /**
+   * Segues
+   */
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if let identifier = segue.identifier {
+      switch identifier {
+      case Constants.MapSegueIdentifier:
+        if let mvc = segue.destinationViewController as? MapViewController {
+          if let ppc = mvc.popoverPresentationController {
+            let width = view.bounds.width
+            let height = view.bounds.height
+            let center: CGRect = CGRect(x: width / 2, y: height / 2, width: 1, height: 1)
+            ppc.sourceRect = center
+            ppc.delegate = self
+          }
+        }
+      default: break
+      }
+    }
+  }
+  
+  
+  
+  func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+    return .None
   }
 }
 
@@ -190,7 +237,7 @@ class AddFriendTableViewCell: UITableViewCell, UITextFieldDelegate {
   
   override func awakeFromNib() {
     // Add tap gesture
-    var gesture = UITapGestureRecognizer(target: self, action: "onTap:")
+    let gesture = UITapGestureRecognizer(target: self, action: "onTap:")
     contentView.addGestureRecognizer(gesture)
   }
   
@@ -200,7 +247,9 @@ class AddFriendTableViewCell: UITableViewCell, UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
     if delegate != nil {
-      delegate!.addFriend(input.text)
+      if let newFriend = input.text {
+        delegate!.addFriend(newFriend)
+      }
     }
     return false
   }

@@ -15,6 +15,7 @@
 		EA30B8951AFFE35D0081AA98 /* WhereYouTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30B8941AFFE35D0081AA98 /* WhereYouTests.swift */; };
 		EA30B89F1AFFE67D0081AA98 /* ParseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */; };
 		EA4A5A6A1B176086006AA23F /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4A5A691B176086006AA23F /* Colours.swift */; };
+		EAAC5B741B2A2EF600173C85 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAC5B731B2A2EF600173C85 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +29,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A3897B124B0FFCB8B4D5644 /* Pods-WhereYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereYou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhereYou/Pods-WhereYou.debug.xcconfig"; sourceTree = "<group>"; };
+		747A1BD94CCBC8F80ADB33BA /* libPods-WhereYou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WhereYou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B21C39ED0D08766CA4855E43 /* Pods-WhereYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereYou.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereYou/Pods-WhereYou.release.xcconfig"; sourceTree = "<group>"; };
+		EA0434A21B23DED5005917C9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "parse-library-1.7.4/Bolts.framework"; sourceTree = "<group>"; };
+		EA0434A31B23DED5005917C9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "parse-library-1.7.4/Parse.framework"; sourceTree = "<group>"; };
+		EA0434A41B23DED5005917C9 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseCrashReporting.framework; path = "parse-library-1.7.4/ParseCrashReporting.framework"; sourceTree = "<group>"; };
+		EA0434A51B23DED5005917C9 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtils.framework; path = "parse-library-1.7.4/ParseFacebookUtils.framework"; sourceTree = "<group>"; };
+		EA0434A61B23DED5005917C9 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = "parse-library-1.7.4/ParseFacebookUtilsV4.framework"; sourceTree = "<group>"; };
+		EA0434A71B23DED5005917C9 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseUI.framework; path = "parse-library-1.7.4/ParseUI.framework"; sourceTree = "<group>"; };
+		EA0434AE1B23DF1B005917C9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		EA0434B01B23EBB9005917C9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		EA0434B11B23EBB9005917C9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		EA0434B21B23EBB9005917C9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EA0434B31B23EBB9005917C9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		EA0434B41B23EBB9005917C9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EA0434B51B23EBB9005917C9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		EA0434B61B23EBB9005917C9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		EA0434B71B23EBB9005917C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		EA0434C01B23EBD8005917C9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		EA0434C11B23EBD8005917C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		EA30B8791AFFE35D0081AA98 /* WhereYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA30B87D1AFFE35D0081AA98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +61,7 @@
 		EA30B8941AFFE35D0081AA98 /* WhereYouTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereYouTests.swift; sourceTree = "<group>"; };
 		EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseHelper.swift; sourceTree = "<group>"; };
 		EA4A5A691B176086006AA23F /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		EAAC5B731B2A2EF600173C85 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +82,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D5405C00343C93633835217D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2A3897B124B0FFCB8B4D5644 /* Pods-WhereYou.debug.xcconfig */,
+				B21C39ED0D08766CA4855E43 /* Pods-WhereYou.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EA0434A01B23DEB3005917C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EA0434C01B23EBD8005917C9 /* libsqlite3.dylib */,
+				EA0434C11B23EBD8005917C9 /* libz.dylib */,
+				EA0434B01B23EBB9005917C9 /* CFNetwork.framework */,
+				EA0434B11B23EBB9005917C9 /* CoreGraphics.framework */,
+				EA0434B21B23EBB9005917C9 /* CoreLocation.framework */,
+				EA0434B31B23EBB9005917C9 /* MobileCoreServices.framework */,
+				EA0434B41B23EBB9005917C9 /* QuartzCore.framework */,
+				EA0434B51B23EBB9005917C9 /* Security.framework */,
+				EA0434B61B23EBB9005917C9 /* StoreKit.framework */,
+				EA0434B71B23EBB9005917C9 /* SystemConfiguration.framework */,
+				EA0434AE1B23DF1B005917C9 /* AudioToolbox.framework */,
+				EA0434A21B23DED5005917C9 /* Bolts.framework */,
+				EA0434A31B23DED5005917C9 /* Parse.framework */,
+				EA0434A41B23DED5005917C9 /* ParseCrashReporting.framework */,
+				EA0434A51B23DED5005917C9 /* ParseFacebookUtils.framework */,
+				EA0434A61B23DED5005917C9 /* ParseFacebookUtilsV4.framework */,
+				EA0434A71B23DED5005917C9 /* ParseUI.framework */,
+				747A1BD94CCBC8F80ADB33BA /* libPods-WhereYou.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EA30B8701AFFE35D0081AA98 = {
 			isa = PBXGroup;
 			children = (
 				EA30B87B1AFFE35D0081AA98 /* WhereYou */,
+				EA0434A01B23DEB3005917C9 /* Frameworks */,
 				EA30B8911AFFE35D0081AA98 /* WhereYouTests */,
 				EA30B87A1AFFE35D0081AA98 /* Products */,
+				D5405C00343C93633835217D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				EA30B8801AFFE35D0081AA98 /* MainViewController.swift */,
+				EAAC5B731B2A2EF600173C85 /* MapViewController.swift */,
 				EA30B8821AFFE35D0081AA98 /* Main.storyboard */,
 				EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */,
 				EA4A5A691B176086006AA23F /* Colours.swift */,
@@ -125,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA30B8981AFFE35D0081AA98 /* Build configuration list for PBXNativeTarget "WhereYou" */;
 			buildPhases = (
+				DBE2DC7B312B2062E2B08CA3 /* Check Pods Manifest.lock */,
 				EA30B8751AFFE35D0081AA98 /* Sources */,
 				EA30B8761AFFE35D0081AA98 /* Frameworks */,
 				EA30B8771AFFE35D0081AA98 /* Resources */,
+				253749833B58D2DF3EBC6AB7 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -162,7 +223,8 @@
 		EA30B8711AFFE35D0081AA98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Tony;
 				TargetAttributes = {
 					EA30B8781AFFE35D0081AA98 = {
@@ -213,6 +275,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		253749833B58D2DF3EBC6AB7 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WhereYou/Pods-WhereYou-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBE2DC7B312B2062E2B08CA3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EA30B8751AFFE35D0081AA98 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -221,6 +316,7 @@
 				EA30B8811AFFE35D0081AA98 /* MainViewController.swift in Sources */,
 				EA30B87F1AFFE35D0081AA98 /* AppDelegate.swift in Sources */,
 				EA30B89F1AFFE67D0081AA98 /* ParseHelper.swift in Sources */,
+				EAAC5B741B2A2EF600173C85 /* MapViewController.swift in Sources */,
 				EA4A5A6A1B176086006AA23F /* Colours.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,6 +380,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -346,10 +443,16 @@
 		};
 		EA30B8991AFFE35D0081AA98 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A3897B124B0FFCB8B4D5644 /* Pods-WhereYou.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/parse-library-1.7.4",
+				);
 				INFOPLIST_FILE = WhereYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "tonyjhuang.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -357,10 +460,16 @@
 		};
 		EA30B89A1AFFE35D0081AA98 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B21C39ED0D08766CA4855E43 /* Pods-WhereYou.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/parse-library-1.7.4",
+				);
 				INFOPLIST_FILE = WhereYou/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "tonyjhuang.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -380,6 +489,7 @@
 				);
 				INFOPLIST_FILE = WhereYouTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "tonyjhuang.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhereYou.app/WhereYou";
 			};
@@ -395,6 +505,7 @@
 				);
 				INFOPLIST_FILE = WhereYouTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "tonyjhuang.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WhereYou.app/WhereYou";
 			};

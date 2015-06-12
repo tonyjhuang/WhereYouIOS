@@ -50,7 +50,7 @@ class ParseHelper {
   }
   
   func removeFriend(friend: String) {
-    if let index = find(friends, friend) {
+    if let index = friends.indexOf(friend) {
       friends.removeAtIndex(index)
     }
   }

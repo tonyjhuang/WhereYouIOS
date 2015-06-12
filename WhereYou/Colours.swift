@@ -57,12 +57,12 @@ extension UIColor {
   }
   
   class func getRandomColor() -> UIColor {
-    var index = Int(arc4random_uniform(UInt32(colors.count)))
+    let index = Int(arc4random_uniform(UInt32(colors.count)))
     return UIColorFromRGB(colors[index]);
   }
   
   class func getRandomColor(string: String) -> UIColor {
-    var index = abs(string.hashValue % colors.count)
+    let index = abs(string.hashValue % colors.count)
     return UIColorFromRGB(colors[index])
   }
   
