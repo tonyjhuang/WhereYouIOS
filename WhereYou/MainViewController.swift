@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverPresentationControllerDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -158,31 +158,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   func deleteFriend(friend: String) {
     parse.removeFriend(friend)
     tableView.reloadData()
-  }
-  
-  /**
-   * Segues
-   */
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if let identifier = segue.identifier {
-      switch identifier {
-      case Constants.MapSegueIdentifier:
-        if let mvc = segue.destinationViewController as? MapViewController {
-          if let ppc = mvc.popoverPresentationController {
-            let width = view.bounds.width
-            let height = view.bounds.height
-            let center: CGRect = CGRect(x: width / 2, y: height / 2, width: 1, height: 1)
-            ppc.sourceRect = center
-            ppc.delegate = self
-          }
-        }
-      default: break
-      }
-    }
-  }
-  
-  
+  }  
   
   func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
     return .None
