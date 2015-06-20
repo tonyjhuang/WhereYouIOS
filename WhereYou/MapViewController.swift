@@ -9,13 +9,22 @@
 import UIKit
 import GoogleMaps
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, GMSMapViewDelegate {
 
   
-  @IBOutlet weak var mapView: GMSMapView!
+  @IBOutlet weak var mapView: GMSMapView! {
+    didSet {
+      mapView.settings.scrollGestures = false
+      mapView.settings.zoomGestures = false
+      mapView.settings.tiltGestures = false
+      mapView.settings.rotateGestures = false
+    }
+  }
   
   @IBAction func finish(sender: UITapGestureRecognizer) {
     dismissViewControllerAnimated(true, completion: nil)
   }
+ 
+  
   
 }
