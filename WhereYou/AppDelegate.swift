@@ -95,10 +95,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       print("yup! \(navController)")
       let storyboard = UIStoryboard(name: "Main", bundle: nil)
       if let mvc = storyboard.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
-        if notification.userInfo != nil {
-          if let friend = notification.userInfo!["friend"] as? String {
-            mvc.friend = friend
-          }
+        if let userInfo = notification.userInfo {
+          mvc.friend = userInfo["friend"] as! String
+          mvc.lat = userInfo["lat"] as! CLLocationDegrees
+          mvc.lng = userInfo["lng"] as! CLLocationDegrees
         }
         navController.pushViewController(mvc, animated: true)
       }

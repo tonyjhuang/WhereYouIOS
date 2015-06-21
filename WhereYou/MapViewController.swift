@@ -24,7 +24,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   
   @IBOutlet weak var addressLabel: UILabel! {
     didSet {
-      setAddressLabelTextFromCoordinates(Constants.hillsideLat, lng: Constants.hillsideLng)
+      setAddressLabelTextFromCoordinates(lat, lng: lng)
     }
   }
   
@@ -46,6 +46,26 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
     }
   }
   
+  private var _lat, _lng: CLLocationDegrees?
+  
+  var lat: CLLocationDegrees {
+    get {
+      return _lat == nil ? Constants.hillsideLat : _lat!
+    }
+    set {
+      _lat = newValue
+    }
+  }
+  
+  var lng: CLLocationDegrees {
+    get {
+      return _lng == nil ? Constants.hillsideLng : _lng!
+    }
+    set {
+      _lng = newValue
+    }
+  }
+  
   private struct Constants {
     static let ZoomLevel: Float = 14
     static let hillsideLat: CLLocationDegrees = 42.3315870
@@ -61,7 +81,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
       mapView.settings.tiltGestures = false
       mapView.settings.rotateGestures = false
       
-      setLocation(Constants.hillsideLat, lng: Constants.hillsideLng)
+      setLocation(lat, lng: lng)
     }
   }
   
