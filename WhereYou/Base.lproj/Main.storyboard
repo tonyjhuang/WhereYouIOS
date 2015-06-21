@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="NhL-dS-gPV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ioF-4i-EE7">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
@@ -178,7 +178,7 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="3Py-ce-ukI" kind="show" id="DOf-s1-bZn"/>
+                                                    <segue destination="3Py-ce-ukI" kind="show" identifier="Show Map" id="DOf-s1-bZn"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzc-VN-toM">
@@ -260,6 +260,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="qd2-wa-hJW"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="800"/>
                     <connections>
@@ -270,7 +271,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v7M-iz-6Cv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-75" y="211"/>
+            <point key="canvasLocation" x="737" y="211"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="UyZ-QH-21K">
@@ -384,12 +385,12 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="eYm-4F-cpC" secondAttribute="bottom" constant="644" id="D50-zn-9An"/>
                             <constraint firstItem="eYm-4F-cpC" firstAttribute="leading" secondItem="Hg6-LC-63v" secondAttribute="leading" id="Hrc-bS-Bc6"/>
+                            <constraint firstItem="ock-kL-crS" firstAttribute="top" secondItem="DFR-QA-PRO" secondAttribute="bottom" id="MzQ-cl-T5b"/>
                             <constraint firstItem="Hg6-LC-63v" firstAttribute="leading" secondItem="h5S-o3-5Ta" secondAttribute="leading" id="SHt-mQ-523"/>
                             <constraint firstItem="DFR-QA-PRO" firstAttribute="top" secondItem="Hg6-LC-63v" secondAttribute="bottom" id="UPO-ic-KTp"/>
                             <constraint firstItem="eYm-4F-cpC" firstAttribute="trailing" secondItem="Hg6-LC-63v" secondAttribute="trailing" id="Vhl-Ag-gSd"/>
                             <constraint firstItem="Hg6-LC-63v" firstAttribute="top" secondItem="eYm-4F-cpC" secondAttribute="bottom" id="WE5-sF-Gbp"/>
                             <constraint firstAttribute="trailing" secondItem="Hg6-LC-63v" secondAttribute="trailing" id="ak1-vd-CXd"/>
-                            <constraint firstItem="ock-kL-crS" firstAttribute="top" secondItem="DFR-QA-PRO" secondAttribute="bottom" id="oKw-M5-F1I"/>
                             <constraint firstItem="eYm-4F-cpC" firstAttribute="top" secondItem="h5S-o3-5Ta" secondAttribute="top" id="pW9-bS-Wjr"/>
                             <constraint firstAttribute="trailing" secondItem="DFR-QA-PRO" secondAttribute="trailing" id="vMk-WX-oyB"/>
                             <constraint firstItem="DFR-QA-PRO" firstAttribute="leading" secondItem="h5S-o3-5Ta" secondAttribute="leading" id="wqP-1n-MIR"/>
@@ -415,7 +416,25 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="553" y="111"/>
+            <point key="canvasLocation" x="1365" y="111"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lSc-Ur-OtV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="ioF-4i-EE7" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iko-AF-UIw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NhL-dS-gPV" kind="relationship" relationship="rootViewController" id="022-CJ-l8k"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v3z-Bc-dr1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-75" y="211"/>
         </scene>
     </scenes>
     <resources>

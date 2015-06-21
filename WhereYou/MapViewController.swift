@@ -53,7 +53,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   }
   
   @IBAction func finish(sender: UITapGestureRecognizer) {
-    dismissViewControllerAnimated(true, completion: nil)
+    if navigationController != nil {
+      navigationController!.popViewControllerAnimated(true)
+    } else {
+      dismissViewControllerAnimated(true, completion: nil)
+    }
   }
  
   func setLocation(lat: CLLocationDegrees, lng: CLLocationDegrees) {

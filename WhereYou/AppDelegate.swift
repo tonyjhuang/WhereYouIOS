@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Parse
+import Parse
 import GoogleMaps
 
 @UIApplicationMain
@@ -15,14 +15,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   
+  private struct Constants {
+    static let ParseApplicationId = "6P3x2PUkXXXgxh1PCYOd1TeC1qjyrwigadahvJeI"
+    static let ParseClientKey = "IK3ABLFW5EGhYqg8bWv9BDpqGkJqEKpzMnUF6NeK"
+  }
+  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+
+    print("didFinishLaunchingWithOptions")
+    if launchOptions != nil {
+      print("userInfo: \(launchOptions![UIApplicationLaunchOptionsLocalNotificationKey])")
+    }
+    
     
     GMSServices.provideAPIKey("AIzaSyAzy-GPN0dN1eqJP3QA-EQKr8Bvy9IWAbo")
     
     // Parse shit
-    //Parse.setApplicationId("6P3x2PUkXXXgxh1PCYOd1TeC1qjyrwigadahvJeI", clientKey: "IK3ABLFW5EGhYqg8bWv9BDpqGkJqEKpzMnUF6NeK")
-    /*
+    Parse.setApplicationId(Constants.ParseApplicationId, clientKey: Constants.ParseClientKey)
+    
     // Register for Push Notitications
     if application.applicationState != UIApplicationState.Background {
       // Track an app open here if we launch with a push, unless
@@ -40,16 +51,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
     }
     
+    let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
     if application.respondsToSelector("registerUserNotificationSettings:") {
-      let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
-      let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
       application.registerUserNotificationSettings(settings)
       application.registerForRemoteNotifications()
     } else {
-      let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
+      let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
       application.registerForRemoteNotificationTypes(types)
     }
-    */
+    
     return true
   }
   
@@ -58,9 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-    /*let installation = PFInstallation.currentInstallation()
+    let installation = PFInstallation.currentInstallation()
     installation.setDeviceTokenFromData(deviceToken)
-    installation.saveEventually(nil)*/
+    installation.saveEventually(nil)
   }
   
   func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -72,10 +82,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    /*PFPush.handlePush(userInfo)
+    PFPush.handlePush(userInfo)
     if application.applicationState == UIApplicationState.Inactive {
       PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
-    }*/
+    }
+  }
+  
+  func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+    print("received local notification: \(notification.alertBody), \(notification.userInfo)")
+    //self.window?.rootViewController?.performSegueWithIdentifier("Show Map", sender: nil)
+    if let navController = self.window?.rootViewController as? UINavigationController {
+      print("yup! \(navController)")
+      let c = MapViewController(nibName: "MapViewController", bundle: nil)
+      navController.pushViewController(c, animated: true)
+    }
   }
   
   func applicationWillResignActive(application: UIApplication) {

@@ -127,7 +127,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let point: CGPoint = gesture.locationInView(tableView)
     if let indexPath = tableView.indexPathForRowAtPoint(point){ // tapped friend row
       if let friendCell = tableView.cellForRowAtIndexPath(indexPath) as? MainTableViewCell {
-        print("selected \(friendCell.label.text!)")
+        
+        // friend was tapped!
+        parse.askForLocation(friendCell.label.text!)
+        
         addFriendCell?.showInput(false)
         if editMode {
           editMode = false

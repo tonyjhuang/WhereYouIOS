@@ -3,5 +3,6 @@ platform :ios, '8.1'
 
 target 'WhereYou' do
   pod 'GoogleMaps'
+  pod 'Parse'
 end
 
