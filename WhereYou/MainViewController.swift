@@ -23,7 +23,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   @IBOutlet weak var nameLabelContainer: UIView!
   @IBOutlet weak var nameLabel: UILabel! {
     didSet {
-        nameLabel.text = "Hello, \(parse.name)."
+      nameLabel.text = "Hello, \(parse.name)."
     }
   }
   
@@ -41,8 +41,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   /**
-   * Swipe right to go back
-   */
+  * Swipe right to go back
+  */
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -57,8 +57,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   /**
-   * Manage scrolling for keyboard.
-   */
+  * Manage scrolling for keyboard.
+  */
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -97,8 +97,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   /**
-   * Prepare tableView data.
-   */
+  * Prepare tableView data.
+  */
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return parse.friends.count + 1
@@ -124,8 +124,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   /**
-   * Gestures
-   */
+  * Gestures
+  */
   
   // Handle long press on tableview
   func onLongPress(gesture: UILongPressGestureRecognizer) {
@@ -143,16 +143,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     let point: CGPoint = gesture.locationInView(tableView)
     if let indexPath = tableView.indexPathForRowAtPoint(point){ // tapped friend row
       if let friendCell = tableView.cellForRowAtIndexPath(indexPath) as? MainTableViewCell {
-        
-        // friend was tapped!
-        parse.askForLocation(friendCell.label.text!)
-        
-        addFriendCell?.showInput(false)
         if editMode {
           editMode = false
+          addFriendCell?.showInput(false)
         } else {
-          // TODO: parse stuff
-          
+          if addFriendCell != nil && addFriendCell!.isShowingInput {
+            addFriendCell?.showInput(false)
+          } else {
+            parse.askForLocation(friendCell.label.text!)
+          }
         }
       }
     } else { // tableview (no row)
@@ -164,13 +163,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   @IBAction func showMap() {
     if let mvc = storyboard?.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
-        navigationController?.pushViewController(mvc, animated: true)
+      navigationController?.pushViewController(mvc, animated: true)
     }
   }
   
   /**
-   * Modify Friends list 
-   */
+  * Modify Friends list
+  */
   func addFriend(friend: String) {
     if let cell = addFriendCell {
       cell.showInput(false)
@@ -183,7 +182,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   func deleteFriend(friend: String) {
     parse.removeFriend(friend)
     tableView.reloadData()
-  }  
+  }
   
   func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
     return .None
@@ -233,6 +232,10 @@ class AddFriendTableViewCell: UITableViewCell, UITextFieldDelegate {
   }
   
   weak var delegate: AddFriendDelegate?
+  
+  var isShowingInput: Bool {
+    get { return input.isFirstResponder() }
+  }
   
   override func awakeFromNib() {
     // Add tap gesture
