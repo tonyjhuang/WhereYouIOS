@@ -90,11 +90,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
     print("received local notification: \(notification.alertBody), \(notification.userInfo)")
-    //self.window?.rootViewController?.performSegueWithIdentifier("Show Map", sender: nil)
+
     if let navController = self.window?.rootViewController as? UINavigationController {
       print("yup! \(navController)")
       let storyboard = UIStoryboard(name: "Main", bundle: nil)
       if let mvc = storyboard.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
+        if notification.userInfo != nil {
+          if let friend = notification.userInfo!["friend"] as? String {
+            mvc.friend = friend
+          }
+        }
         navController.pushViewController(mvc, animated: true)
       }
     }

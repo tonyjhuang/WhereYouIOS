@@ -13,14 +13,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
 
   @IBOutlet weak var backgroundView: UIView! {
     didSet {
-      backgroundView.backgroundColor = UIColor.getRandomColor(Constants.name)
+      backgroundView.backgroundColor = UIColor.getRandomColor(friend)
     }
   }
   @IBOutlet weak var nameLabel: UILabel! {
     didSet {
-      nameLabel.text = Constants.name
+        nameLabel.text = friend
     }
   }
+  
   @IBOutlet weak var addressLabel: UILabel! {
     didSet {
       setAddressLabelTextFromCoordinates(Constants.hillsideLat, lng: Constants.hillsideLng)
@@ -29,7 +30,19 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
   
   @IBOutlet weak var bottomLabelBackgroundView: UIView! {
     didSet {
-      bottomLabelBackgroundView.backgroundColor = UIColor.getRandomColor(Constants.name)
+      bottomLabelBackgroundView.backgroundColor = UIColor.getRandomColor(friend)
+    }
+  }
+  
+  // The friend whose address we're showing
+  private var _friend: String?
+  
+  var friend: String {
+    get {
+      return _friend == nil ? Constants.name : _friend!
+    }
+    set {
+      _friend = newValue
     }
   }
   
