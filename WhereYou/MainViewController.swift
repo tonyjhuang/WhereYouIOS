@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -38,6 +38,22 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   private struct Constants {
     static let MapSegueIdentifier = "Show Map"
+  }
+  
+  /**
+   * Swipe right to go back
+   */
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    navigationController?.interactivePopGestureRecognizer?.delegate = self
+  }
+  
+  func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    if(navigationController!.viewControllers.count > 1){
+      return true
+    }
+    return false
   }
   
   /**
