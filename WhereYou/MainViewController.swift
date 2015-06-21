@@ -146,6 +146,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
   }
   
+  @IBAction func showMap() {
+    if let mvc = storyboard?.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
+        navigationController?.pushViewController(mvc, animated: true)
+    }
+  }
+  
   /**
    * Modify Friends list 
    */

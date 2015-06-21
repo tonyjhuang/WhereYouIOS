@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E307002EE5B7A12191755C50 /* libPods-WhereYou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 747A1BD94CCBC8F80ADB33BA /* libPods-WhereYou.a */; };
-		EA2406031B36551300CE2133 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA2406011B36551300CE2133 /* MapViewController.xib */; };
 		EA30B87F1AFFE35D0081AA98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */; };
 		EA30B8811AFFE35D0081AA98 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30B8801AFFE35D0081AA98 /* MainViewController.swift */; };
 		EA30B8841AFFE35D0081AA98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA30B8821AFFE35D0081AA98 /* Main.storyboard */; };
@@ -51,7 +50,6 @@
 		EA0434B71B23EBB9005917C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EA0434C01B23EBD8005917C9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		EA0434C11B23EBD8005917C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		EA2406011B36551300CE2133 /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		EA30B8791AFFE35D0081AA98 /* WhereYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA30B87D1AFFE35D0081AA98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 				EA30B8801AFFE35D0081AA98 /* MainViewController.swift */,
 				EAAC5B731B2A2EF600173C85 /* MapViewController.swift */,
 				EA30B8821AFFE35D0081AA98 /* Main.storyboard */,
-				EA2406011B36551300CE2133 /* MapViewController.xib */,
 				EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */,
 				EA4A5A691B176086006AA23F /* Colours.swift */,
 				EA30B87C1AFFE35D0081AA98 /* Supporting Files */,
@@ -268,7 +265,6 @@
 			files = (
 				EA30B8841AFFE35D0081AA98 /* Main.storyboard in Resources */,
 				EA30B8891AFFE35D0081AA98 /* LaunchScreen.xib in Resources */,
-				EA2406031B36551300CE2133 /* MapViewController.xib in Resources */,
 				EA30B8861AFFE35D0081AA98 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

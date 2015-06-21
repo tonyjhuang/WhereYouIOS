@@ -93,8 +93,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //self.window?.rootViewController?.performSegueWithIdentifier("Show Map", sender: nil)
     if let navController = self.window?.rootViewController as? UINavigationController {
       print("yup! \(navController)")
-      let c = MapViewController(nibName: "MapViewController", bundle: nil)
-      navController.pushViewController(c, animated: true)
+      let storyboard = UIStoryboard(name: "Main", bundle: nil)
+      if let mvc = storyboard.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
+        navController.pushViewController(mvc, animated: true)
+      }
     }
   }
   
