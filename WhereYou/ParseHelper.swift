@@ -58,6 +58,11 @@ class ParseHelper {
   }
   
   func askForLocation(friend: String) {
+    if friend == "tony" {
+      // 'ask' for location.
+    } else {
+      // otherwise, send request to parse but you know... there's nothing there yet.
+    }
     let (lat, lng) = getFakeLocation()
     
     let notification: UILocalNotification = UILocalNotification()
