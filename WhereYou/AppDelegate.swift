@@ -88,20 +88,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-    print("received local notification: \(notification.alertBody), \(notification.userInfo)")
-
-    if let navController = self.window?.rootViewController as? UINavigationController {
-      print("yup! \(navController)")
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      if let mvc = storyboard.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
-        if let userInfo = notification.userInfo {
-          mvc.friend = userInfo["friend"] as! String
-          mvc.lat = userInfo["lat"] as! CLLocationDegrees
-          mvc.lng = userInfo["lng"] as! CLLocationDegrees
+    print("\n\n\nreceived local notification: \n - \(notification.alertBody)\n - \(notification.userInfo)\n\n")
+    if let userInfo = notification.userInfo {
+      if let action = userInfo[ParseHelper.Constants.ActionKey] as? String {
+        let friend = userInfo["name"] as! String
+        switch action {
+        case ParseHelper.Constants.Action.Ask:
+          clearNotifications(friend, application: application)
+          print("got an ask! responding..")
+          ParseHelper().respond()
+          break
+        case ParseHelper.Constants.Action.Respond:
+          print("got a response!")
+          clearNotifications(friend, application: application)
+          if let navController = self.window?.rootViewController as? UINavigationController {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let mvc = storyboard.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
+              if let userInfo = notification.userInfo {
+                mvc.friend = userInfo["name"] as! String
+                mvc.lat = userInfo["lat"] as! CLLocationDegrees
+                mvc.lng = userInfo["lng"] as! CLLocationDegrees
+              }
+              navController.pushViewController(mvc, animated: true)
+            }
+          }
+          break
+        default: break
         }
-        navController.pushViewController(mvc, animated: true)
       }
     }
+  }
+  
+  private func clearNotifications(friend: String, application: UIApplication) {
+    application.applicationIconBadgeNumber = 1
+    application.applicationIconBadgeNumber = 0
+    application.cancelAllLocalNotifications()
   }
   
   func applicationWillResignActive(application: UIApplication) {

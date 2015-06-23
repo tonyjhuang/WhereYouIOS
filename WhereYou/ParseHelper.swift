@@ -25,15 +25,12 @@ class ParseHelper {
     return Static.instance!
   }
   
-  private struct Constants {
-    static let FriendsKey = "ParseHelper.friends"
-    static let FriendsDefaultValue = ["gary", "gasper", "allison", "kevin"]
-    static let NameKey = "ParseHelper.name"
-    static let NameDefaultValue = "tony"
-    static let ParseKeyAction = "action"
+  struct Constants {
+    static let ActionKey = "action"
     struct Action {
-      static let BundleIdentifier = "com.tonyjhuang.whereyou"
-      static let Ask = "\(BundleIdentifier).ASK"
+      static let BundleIdentifier: String = "com.tonyjhuang.whereyou"
+      static let Ask: String = "\(BundleIdentifier).ASK"
+      static let Respond: String = "\(BundleIdentifier).RESPOND"
     }
   }
   
@@ -67,6 +64,17 @@ class ParseHelper {
     }
     set {
       currentInstallation.setValue(newValue, forKey: "name")
+      currentInstallation.saveInBackgroundWithBlock(nil)
+    }
+  }
+  
+  var friendsMeta: [String: AnyObject] {
+    get {
+      /* Work around */
+      return currentInstallation.dictionaryForKey("friendsMeta")
+    }
+    set {
+      currentInstallation.setValue(newValue, forKey: "friendsMeta")
       currentInstallation.saveInBackgroundWithBlock(nil)
     }
   }
@@ -111,6 +119,15 @@ class ParseHelper {
     }
   }
   
+  func markAsAsking(asking: Bool, forFriend friend: String) {
+    if friendsMeta[friend] == nil || !(friendsMeta[friend] is [String: AnyObject]) {
+      friendsMeta[friend] = ["askPending": asking]
+    } else {
+      var meta = (friendsMeta[friend] as! [String:AnyObject])
+      meta["askPending"] = asking
+    }
+  }
+  
   func askForLocation(friend: String) {
     /*
     
@@ -134,21 +151,41 @@ class ParseHelper {
     /***** WORKING CODE ******/
 */
     
+    
     if friend == "tony" {
-      // 'ask' for location.
+      let notification: UILocalNotification = UILocalNotification()
+      notification.alertBody = "\(friend) wants to know where you at!" // text that will be displayed in the notification
+      notification.alertAction = "respond" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+      notification.fireDate = NSDate(timeIntervalSinceNow: 3) // todo item due date (when notification will be fired)
+      notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+      notification.userInfo = [ // for now just mock it out
+        Constants.ActionKey: Constants.Action.Ask,
+        "name": name
+      ]
+      UIApplication.sharedApplication().scheduleLocalNotification(notification)
+
     } else {
       // otherwise, send request to parse but you know... there's nothing there yet.
     }
+  
+  }
+  
+  /*********** WORK AROUND ***********/
+  func respond() {
     let (lat, lng) = getFakeLocation()
     
     let notification: UILocalNotification = UILocalNotification()
-    notification.alertBody = friend // text that will be displayed in the notification
-    notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+    notification.alertBody = "tony has send you their location!" // text that will be displayed in the notification
+    notification.alertAction = "view" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
     notification.fireDate = NSDate(timeIntervalSinceNow: 3) // todo item due date (when notification will be fired)
     notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-    notification.userInfo = ["friend": friend, "lat":  lat, "lng": lng] // assign a unique identifier to the notification so that we can retrieve it later
+    notification.userInfo = [
+      Constants.ActionKey: Constants.Action.Respond,
+      "name": "tony",
+      "lat":  lat,
+      "lng": lng
+    ]
     UIApplication.sharedApplication().scheduleLocalNotification(notification)
-
   }
   
   private func getFakeLocation() -> (lat: CLLocationDegrees, lng: CLLocationDegrees) {
@@ -177,8 +214,43 @@ class GhettoPFInstallation {
     return defaults.objectForKey(key)
   }
   
-  func setValue(value: AnyObject, forKey key: String) {
-    defaults.setValue(value, forKey: key)
+  func setValue(value: AnyObject?, forKey key: String) {
+    if value != nil {
+      if let dict = value! as? [String: AnyObject] {
+        defaults.setValue(convertToNSDictionary(dict), forKey: key)
+      } else {
+        defaults.setValue(value, forKey: key)
+      }
+    } else {
+      defaults.setValue(value, forKey: key)
+    }
+  }
+  
+  func dictionaryForKey(key: String) -> [String: AnyObject] {
+    if let dict = defaults.dictionaryForKey(key) {
+      return convertToDictionary(dict)
+    } else {
+      return [String: AnyObject]()
+    }
+  }
+  
+  private func convertToNSDictionary(dict: [String: AnyObject]) -> [NSObject: AnyObject] {
+    print("\(dict)")
+    var newDict = [NSObject: AnyObject]()
+    for (_, key) in dict.keys.enumerate() {
+      newDict[key as NSString] = dict[key]
+    }
+    print("\(newDict)")
+    return newDict
+  }
+  
+  private func convertToDictionary(dict: [NSObject: AnyObject]) -> [String: AnyObject] {
+    var newDict = [String: AnyObject]()
+    for (_, key) in dict.keys.enumerate() {
+      newDict[key as! String] = dict[key]
+    }
+    print("\(newDict)")
+    return newDict
   }
   
   func saveInBackgroundWithBlock(block: PFBooleanResultBlock?) { }

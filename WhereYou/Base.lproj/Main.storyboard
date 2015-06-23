@@ -383,14 +383,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Hg6-LC-63v" firstAttribute="width" secondItem="h5S-o3-5Ta" secondAttribute="width" id="A04-EV-LbI"/>
                             <constraint firstAttribute="bottom" secondItem="eYm-4F-cpC" secondAttribute="bottom" constant="644" id="D50-zn-9An"/>
-                            <constraint firstItem="eYm-4F-cpC" firstAttribute="leading" secondItem="Hg6-LC-63v" secondAttribute="leading" id="Hrc-bS-Bc6"/>
                             <constraint firstItem="ock-kL-crS" firstAttribute="top" secondItem="DFR-QA-PRO" secondAttribute="bottom" id="MzQ-cl-T5b"/>
-                            <constraint firstItem="Hg6-LC-63v" firstAttribute="leading" secondItem="h5S-o3-5Ta" secondAttribute="leading" id="SHt-mQ-523"/>
-                            <constraint firstItem="DFR-QA-PRO" firstAttribute="top" secondItem="Hg6-LC-63v" secondAttribute="bottom" id="UPO-ic-KTp"/>
-                            <constraint firstItem="eYm-4F-cpC" firstAttribute="trailing" secondItem="Hg6-LC-63v" secondAttribute="trailing" id="Vhl-Ag-gSd"/>
-                            <constraint firstItem="Hg6-LC-63v" firstAttribute="top" secondItem="eYm-4F-cpC" secondAttribute="bottom" id="WE5-sF-Gbp"/>
-                            <constraint firstAttribute="trailing" secondItem="Hg6-LC-63v" secondAttribute="trailing" id="ak1-vd-CXd"/>
+                            <constraint firstItem="Hg6-LC-63v" firstAttribute="centerX" secondItem="h5S-o3-5Ta" secondAttribute="centerX" id="X69-ci-5Ax"/>
+                            <constraint firstItem="eYm-4F-cpC" firstAttribute="centerX" secondItem="h5S-o3-5Ta" secondAttribute="centerX" id="ZCe-fc-cpP"/>
+                            <constraint firstItem="eYm-4F-cpC" firstAttribute="width" secondItem="h5S-o3-5Ta" secondAttribute="width" id="bTD-c2-iv1"/>
+                            <constraint firstItem="Hg6-LC-63v" firstAttribute="top" secondItem="eYm-4F-cpC" secondAttribute="bottom" id="eSt-u1-UBI"/>
+                            <constraint firstItem="DFR-QA-PRO" firstAttribute="top" secondItem="Hg6-LC-63v" secondAttribute="bottom" id="fEa-wF-FHq"/>
                             <constraint firstItem="eYm-4F-cpC" firstAttribute="top" secondItem="h5S-o3-5Ta" secondAttribute="top" id="pW9-bS-Wjr"/>
                             <constraint firstAttribute="trailing" secondItem="DFR-QA-PRO" secondAttribute="trailing" id="vMk-WX-oyB"/>
                             <constraint firstItem="DFR-QA-PRO" firstAttribute="leading" secondItem="h5S-o3-5Ta" secondAttribute="leading" id="wqP-1n-MIR"/>
