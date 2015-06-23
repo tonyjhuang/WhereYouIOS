@@ -173,12 +173,12 @@
                                         <rect key="frame" x="0.0" y="730" width="400" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AvO-kD-Abi">
-                                                <rect key="frame" x="362" y="10" width="30" height="30"/>
-                                                <state key="normal" title="Map">
+                                                <rect key="frame" x="308" y="10" width="84" height="30"/>
+                                                <state key="normal" title="GetLocation">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="showMap" destination="NhL-dS-gPV" eventType="touchUpInside" id="sMn-oY-bMG"/>
+                                                    <action selector="getCurrentLocation" destination="NhL-dS-gPV" eventType="touchUpInside" id="c4G-2V-ORK"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzc-VN-toM">

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -47,6 +48,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationController?.interactivePopGestureRecognizer?.delegate = self
+    locationManager.delegate = self
   }
   
   func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -161,10 +163,65 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
   }
   
-  @IBAction func showMap() {
-    if let mvc = storyboard?.instantiateViewControllerWithIdentifier("MyMapViewController") as? MapViewController {
-      navigationController?.pushViewController(mvc, animated: true)
+  /**
+   * LOCATION 
+   */
+  let locationManager = CLLocationManager()
+  @IBAction func getCurrentLocation() {
+    switch CLLocationManager.authorizationStatus() {
+    case .Authorized, .AuthorizedWhenInUse:
+      print("retrieving location?")
+      getCurrentLocationUpdates()
+      break
+    case .NotDetermined:
+      locationManager.requestWhenInUseAuthorization()
+    case .Restricted, .Denied:
+      /*
+        User has not given us permission to use the location services... wat
+       */
+      let alertController = UIAlertController(
+        title: "Location Access Disabled :(",
+        message: "Please open this app's settings and allow us to use your location so that WhereYou can run properly!",
+        preferredStyle: .Alert)
+      
+      let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+      alertController.addAction(cancelAction)
+      
+      let openAction = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
+        if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+          UIApplication.sharedApplication().openURL(url)
+        }
+      }
+      alertController.addAction(openAction)
+      
+      self.presentViewController(alertController, animated: true, completion: nil)
     }
+  }
+  
+  // User just gave us permissions!
+  func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    if status == .Authorized || status == .AuthorizedWhenInUse {
+      getCurrentLocationUpdates()
+    }
+  }
+  
+  func getCurrentLocationUpdates() {
+    //locationManager.startUpdatingLocation()
+    let (lat, lng) = getFakeLocation()
+    let fakeLocation = CLLocation(latitude: lat, longitude: lng)
+    self.locationManager(locationManager, didUpdateToLocation: fakeLocation, fromLocation: fakeLocation)
+  }
+  
+  func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+    locationManager.stopUpdatingLocation()
+    let coord = newLocation.coordinate
+    print("lat: \(coord.latitude), lng: \(coord.longitude)")
+  }
+  
+  private func getFakeLocation() -> (lat: CLLocationDegrees, lng: CLLocationDegrees) {
+    let latOffset = Double((-1000...1000).randomInt) / 10000
+    let lngOffset = Double((-1000...1000).randomInt) / 10000
+    return (42.333305 + latOffset, -71.100022 + lngOffset)
   }
   
   /**
