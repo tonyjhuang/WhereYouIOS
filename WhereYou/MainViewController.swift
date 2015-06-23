@@ -175,8 +175,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       cell.showInput(false)
     }
     
-    parse.friends += [friend]
-    tableView.reloadData()
+    parse.addFriend(friend) { friends -> Void in
+      self.tableView.reloadData()
+    }
   }
   
   func deleteFriend(friend: String) {
