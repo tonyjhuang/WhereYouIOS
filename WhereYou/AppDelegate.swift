@@ -23,10 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
 
-    print("didFinishLaunchingWithOptions")
-    if launchOptions != nil {
-      print("userInfo: \(launchOptions![UIApplicationLaunchOptionsLocalNotificationKey])")
-    }
+//    print("didFinishLaunchingWithOptions")
+//    if launchOptions != nil {
+//      print("userInfo: \(launchOptions![UIApplicationLaunchOptionsLocalNotificationKey])")
+//    }
     
     
     GMSServices.provideAPIKey("AIzaSyAzy-GPN0dN1eqJP3QA-EQKr8Bvy9IWAbo")
@@ -87,6 +87,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
+  let parse = ParseHelper()
+  
   func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
     print("\n\n\nreceived local notification: \n - \(notification.alertBody)\n - \(notification.userInfo)\n\n")
     if let userInfo = notification.userInfo {
@@ -96,7 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case ParseHelper.Constants.Action.Ask:
           clearNotifications(friend, application: application)
           print("got an ask! responding..")
-          ParseHelper().respond()
+          parse.markAsAsking(true, forFriend: friend)
+          getMainViewController()?.updateFriendsList()
+          //ParseHelper().respond()
           break
         case ParseHelper.Constants.Action.Respond:
           print("got a response!")
@@ -117,6 +121,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
       }
     }
+  }
+  
+  private func getMainViewController() -> MainViewController? {
+    if let rvc = self.window?.rootViewController {
+      if let nvc = rvc as? UINavigationController {
+        return nvc.viewControllers.first as? MainViewController
+      } else {
+        if let mvc = rvc as? MainViewController {
+          return mvc
+        }
+      }
+    }
+    return nil
   }
   
   private func clearNotifications(friend: String, application: UIApplication) {

@@ -51,7 +51,7 @@
 		EA0434B71B23EBB9005917C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EA0434C01B23EBD8005917C9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		EA0434C11B23EBD8005917C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		EA2406041B3665F400CE2133 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Random.swift; path = WhereYou/Random.swift; sourceTree = "<group>"; };
+		EA2406041B3665F400CE2133 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		EA30B8791AFFE35D0081AA98 /* WhereYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA30B87D1AFFE35D0081AA98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				EA30B87B1AFFE35D0081AA98 /* WhereYou */,
-				EA2406041B3665F400CE2133 /* Random.swift */,
 				EA0434A01B23DEB3005917C9 /* Frameworks */,
 				EA30B8911AFFE35D0081AA98 /* WhereYouTests */,
 				EA30B87A1AFFE35D0081AA98 /* Products */,
@@ -149,6 +148,7 @@
 				EA30B8821AFFE35D0081AA98 /* Main.storyboard */,
 				EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */,
 				EA4A5A691B176086006AA23F /* Colours.swift */,
+				EA2406041B3665F400CE2133 /* Random.swift */,
 				EA30B87C1AFFE35D0081AA98 /* Supporting Files */,
 			);
 			path = WhereYou;

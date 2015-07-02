@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class MainViewController: UIViewController, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate {
+class MainViewController: UIViewController, AddFriendDelegate, MainTableViewCellDelegate, UIGestureRecognizerDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -108,14 +108,23 @@ class MainViewController: UIViewController, AddFriendDelegate, MainTableViewCell
     }
   }
   
-  func deleteFriend(friend: String) {
-    parse.removeFriend(friend)
+  func deleteFriend(friend: Friend) {
+    parse.removeFriend(friend.name)
     tableView.reloadData()
   }
   
-  func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-    return .None
+  func respondToFriend(friend: Friend) {
+    parse.markAsAsking(false, forFriend: friend.name)
+    tableView.reloadData()
   }
+  
+  // Notify this viewcontroller that the friendslist has changed.
+  func updateFriendsList() {
+    print("updating friendslist!")
+    print(parse.friendsList)
+    tableView?.reloadData()
+  }
+  
 }
 
 // MARK: TableViewDataSource
@@ -132,10 +141,10 @@ extension MainViewController : UITableViewDataSource {
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     var cell: UITableViewCell
-    if indexPath.row < parse.friends.count {
+    if indexPath.row < parse.friendsList.friends.count {
       cell = tableView.dequeueReusableCellWithIdentifier("cell")!
       if let friendCell = cell as? MainTableViewCell {
-        friendCell.setFriend(parse.friends[indexPath.row])
+        friendCell.friend = parse.friendsList.friends[indexPath.row]
         friendCell.setEditMode(editMode)
         friendCell.delegate = self
       }
@@ -258,26 +267,45 @@ extension MainViewController : CLLocationManagerDelegate {
 // MARK: - TableViewCells
 
 protocol MainTableViewCellDelegate: class {
-  func deleteFriend(friend: String)
+  func deleteFriend(friend: Friend)
+  func respondToFriend(friend: Friend)
 }
 
 class MainTableViewCell: UITableViewCell {
   
+  @IBOutlet weak var background: UIView!
   @IBOutlet weak var label: UILabel!
-  @IBOutlet weak var delete: UIImageView!
+  @IBOutlet weak var delete: UIImageView! {
+    didSet {
+      delete.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onDeleteTap:"))
+      delete.userInteractionEnabled = true
+    }
+  }
+  @IBOutlet weak var asking: UILabel! {
+    didSet {
+      asking.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onAskingTap"))
+      asking.userInteractionEnabled = true
+    }
+  }
   
   weak var delegate: MainTableViewCellDelegate?
   
-  func setFriend(friend: String) {
-    label.text = friend
-    label.textColor = UIColor.whiteColor()
-    label.backgroundColor = UIColor.getRandomColor(friend)
-    delete.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onDeleteTap:"))
-    delete.userInteractionEnabled = true
+  var friend: Friend? {
+    didSet {
+      print("setting \(friend!)")
+      label.text = friend!.name
+      background.backgroundColor = UIColor.getRandomColor(friend!.name)
+      asking.hidden = !friend!.asking
+    }
   }
   
   func onDeleteTap(gesture: UITapGestureRecognizer) {
-    delegate?.deleteFriend(label.text!)
+    delegate?.deleteFriend(friend!)
+  }
+  
+  func onAskingTap() {
+    delegate?.respondToFriend(friend!)
+    print("tap!")
   }
   
   func setEditMode(editing: Bool) {
