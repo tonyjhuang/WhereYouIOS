@@ -53,14 +53,9 @@ class ParseHelper {
     }
   }
   
-  var name: String {
+  var name: String? {
     get {
-      let currentName = currentInstallation.objectForKey("name") as? String
-      if currentName == nil {
-        return "tony"
-      } else {
-        return currentName as String!
-      }
+      return currentInstallation.objectForKey("name") as? String
     }
     set {
       currentInstallation.setValue(newValue, forKey: "name")
@@ -160,7 +155,7 @@ class ParseHelper {
       notification.soundName = UILocalNotificationDefaultSoundName // play default sound
       notification.userInfo = [ // for now just mock it out
         Constants.ActionKey: Constants.Action.Ask,
-        "name": name
+        "name": name!
       ]
       UIApplication.sharedApplication().scheduleLocalNotification(notification)
 

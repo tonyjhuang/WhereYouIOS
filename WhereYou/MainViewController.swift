@@ -24,7 +24,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   @IBOutlet weak var nameLabelContainer: UIView!
   @IBOutlet weak var nameLabel: UILabel! {
     didSet {
-      nameLabel.text = "Hello, \(parse.name)."
+      nameLabel.text = "Hello, \(parse.name!)."
     }
   }
   

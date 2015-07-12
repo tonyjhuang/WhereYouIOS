@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC7CC0AF1B3F3B5200B22776 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7CC0AE1B3F3B5200B22776 /* LoginViewController.swift */; };
 		E307002EE5B7A12191755C50 /* libPods-WhereYou.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 747A1BD94CCBC8F80ADB33BA /* libPods-WhereYou.a */; };
 		EA2406051B3665F400CE2133 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2406041B3665F400CE2133 /* Random.swift */; };
 		EA30B87F1AFFE35D0081AA98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */; };
@@ -34,6 +35,7 @@
 		2A3897B124B0FFCB8B4D5644 /* Pods-WhereYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereYou.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhereYou/Pods-WhereYou.debug.xcconfig"; sourceTree = "<group>"; };
 		747A1BD94CCBC8F80ADB33BA /* libPods-WhereYou.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WhereYou.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B21C39ED0D08766CA4855E43 /* Pods-WhereYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhereYou.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhereYou/Pods-WhereYou.release.xcconfig"; sourceTree = "<group>"; };
+		BC7CC0AE1B3F3B5200B22776 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		EA0434A21B23DED5005917C9 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "parse-library-1.7.4/Bolts.framework"; sourceTree = "<group>"; };
 		EA0434A31B23DED5005917C9 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "parse-library-1.7.4/Parse.framework"; sourceTree = "<group>"; };
 		EA0434A41B23DED5005917C9 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseCrashReporting.framework; path = "parse-library-1.7.4/ParseCrashReporting.framework"; sourceTree = "<group>"; };
@@ -51,7 +53,7 @@
 		EA0434B71B23EBB9005917C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		EA0434C01B23EBD8005917C9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		EA0434C11B23EBD8005917C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		EA2406041B3665F400CE2133 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Random.swift; path = WhereYou/Random.swift; sourceTree = "<group>"; };
+		EA2406041B3665F400CE2133 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		EA30B8791AFFE35D0081AA98 /* WhereYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhereYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA30B87D1AFFE35D0081AA98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA30B87E1AFFE35D0081AA98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				EA30B87B1AFFE35D0081AA98 /* WhereYou */,
-				EA2406041B3665F400CE2133 /* Random.swift */,
 				EA0434A01B23DEB3005917C9 /* Frameworks */,
 				EA30B8911AFFE35D0081AA98 /* WhereYouTests */,
 				EA30B87A1AFFE35D0081AA98 /* Products */,
@@ -146,9 +147,11 @@
 			children = (
 				EA30B8801AFFE35D0081AA98 /* MainViewController.swift */,
 				EAAC5B731B2A2EF600173C85 /* MapViewController.swift */,
+				BC7CC0AE1B3F3B5200B22776 /* LoginViewController.swift */,
 				EA30B8821AFFE35D0081AA98 /* Main.storyboard */,
 				EA30B89E1AFFE67D0081AA98 /* ParseHelper.swift */,
 				EA4A5A691B176086006AA23F /* Colours.swift */,
+				EA2406041B3665F400CE2133 /* Random.swift */,
 				EA30B87C1AFFE35D0081AA98 /* Supporting Files */,
 			);
 			path = WhereYou;
@@ -319,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC7CC0AF1B3F3B5200B22776 /* LoginViewController.swift in Sources */,
 				EA30B8811AFFE35D0081AA98 /* MainViewController.swift in Sources */,
 				EA30B87F1AFFE35D0081AA98 /* AppDelegate.swift in Sources */,
 				EA2406051B3665F400CE2133 /* Random.swift in Sources */,

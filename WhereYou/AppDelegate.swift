@@ -59,6 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       application.registerForRemoteNotificationTypes([.Alert, .Badge, .Sound])
     }
     
+    // Check if user has already signed up
+    if ParseHelper().name != nil {
+        print("logged in!")
+    } else {
+        print("you best login son")
+    }
+   
     return true
   }
   
