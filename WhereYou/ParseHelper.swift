@@ -39,8 +39,6 @@ class ParseHelper {
     currentInstallation = GhettoPFInstallation.currentInstallation()
   }
   
-  
-  
   private let defaults = NSUserDefaults.standardUserDefaults()
   
   var friends: [String] {
@@ -51,6 +49,17 @@ class ParseHelper {
       currentInstallation.setValue(newValue, forKey: "friends")
       currentInstallation.saveInBackgroundWithBlock(nil)
     }
+  }
+    
+  // The big public facing friends list.
+  lazy var friendsList: FriendsList = self.getFriendsList()
+  
+  func getFriendsList() -> FriendsList {
+    return FriendsList(friends: self.friends, meta: self.friendsMeta)
+  }
+  
+  func updateFriendsList() {
+    friendsList = getFriendsList()
   }
   
   var name: String? {
@@ -118,9 +127,13 @@ class ParseHelper {
     if friendsMeta[friend] == nil || !(friendsMeta[friend] is [String: AnyObject]) {
       friendsMeta[friend] = ["askPending": asking]
     } else {
+
       var meta = (friendsMeta[friend] as! [String:AnyObject])
       meta["askPending"] = asking
+      friendsMeta[friend] = meta
+      print("friendsMeta: \(friendsMeta), meta: \(meta)")
     }
+    updateFriendsList()
   }
   
   func askForLocation(friend: String) {
@@ -252,3 +265,50 @@ class GhettoPFInstallation {
   
   func saveEventually() { }
 }
+
+class FriendsList : CustomStringConvertible {
+  
+  var description: String {
+    var desc = "["
+    for friend in friends {
+      desc += "\(friend)"
+    }
+    return desc + "]"
+  }
+  
+  var friends = [Friend]()
+  
+  init(friends: [String], meta: [String: AnyObject]) {
+    for friendName in friends {
+      let friend = Friend(name: friendName, meta: meta[friendName] as? [String:AnyObject] ?? [String:AnyObject]())
+      self.friends.append(friend)
+    }
+    self.friends.sortInPlace {$0.priority > $1.priority }
+  }
+}
+
+class Friend : CustomStringConvertible {
+  let name: String
+  var asking: Bool
+  var score: Int
+  
+  var priority: Int {
+    get {
+      return (asking ? 1000 : 0) + score
+    }
+  }
+  
+  var description: String {
+    return "[\(name),\(asking),\(score)]"
+  }
+  
+  init(name: String, meta: [String: AnyObject]) {
+    self.name = name
+    self.asking = meta["askPending"] as? Bool ?? false
+    self.score = meta["score"] as? Int ?? 0
+  }
+}
+
+
+
+

@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AddFriendDelegate, MainTableViewCellDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class MainViewController: UIViewController, AddFriendDelegate, MainTableViewCellDelegate, UIGestureRecognizerDelegate {
   
   @IBOutlet weak var tableView: UITableView! {
     didSet {
@@ -35,11 +35,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   
   let parse: ParseHelper = ParseHelper.sharedInstance
   
-  var addFriendCell: AddFriendTableViewCell?
+  var locationManager = CLLocationManager()
   
-  private struct Constants {
-    static let MapSegueIdentifier = "Show Map"
-  }
+  var addFriendCell: AddFriendTableViewCell?
   
   /**
   * Swipe right to go back
@@ -58,72 +56,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     return false
   }
   
-  /**
-  * Manage scrolling for keyboard.
-  */
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: "keyboardWillShow:",
-      name: UIKeyboardWillShowNotification,
-      object: nil)
-    
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: "keyboardWillHide:",
-      name: UIKeyboardWillHideNotification,
-      object: nil)
-  }
-  
-  func keyboardWillShow(note: NSNotification) {
-    if let userInfo = note.userInfo {
-      if let keyboardFrameBeginRect: CGRect = userInfo[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue {
-        let keyboardHeight = keyboardFrameBeginRect.size.height
-        let nameLabelContainerHeight = nameLabelContainer.frame.size.height
-        print("\(keyboardHeight)")
-        tableView.contentInset = UIEdgeInsets(top: 0,
-          left: 0,
-          bottom: keyboardHeight - nameLabelContainerHeight,
-          right: 0)
-      }
-    }
-  }
-  
-  func keyboardWillHide(note: NSNotification) {
-    tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-  }
-  
-  override func viewWillDisappear(animated: Bool) {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
-  }
-  
-  /**
-  * Prepare tableView data.
-  */
-  
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return parse.friends.count + 1
-  }
-  
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    var cell: UITableViewCell
-    if indexPath.row < parse.friends.count {
-      cell = tableView.dequeueReusableCellWithIdentifier("cell")!
-      if let friendCell = cell as? MainTableViewCell {
-        friendCell.setFriend(parse.friends[indexPath.row])
-        friendCell.setEditMode(editMode)
-        friendCell.delegate = self
-      }
-    } else { // throw AddFriend row into end of the tableview.
-      cell = tableView.dequeueReusableCellWithIdentifier("addfriend")!
-      addFriendCell = cell as? AddFriendTableViewCell
-      addFriendCell?.delegate = self
-    }
-    // Don't highlight tableview cells
-    cell.selectionStyle = .None
-    return cell
-  }
   
   /**
   * Gestures
@@ -164,9 +96,115 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
   }
   
   /**
-   * LOCATION 
-   */
-  let locationManager = CLLocationManager()
+  * Modify Friends list
+  */
+  func addFriend(friend: String) {
+    if let cell = addFriendCell {
+      cell.showInput(false)
+    }
+    
+    parse.addFriend(friend) { friends -> Void in
+      self.tableView.reloadData()
+    }
+  }
+  
+  func deleteFriend(friend: Friend) {
+    parse.removeFriend(friend.name)
+    tableView.reloadData()
+  }
+  
+  func respondToFriend(friend: Friend) {
+    parse.markAsAsking(false, forFriend: friend.name)
+    tableView.reloadData()
+  }
+  
+  // Notify this viewcontroller that the friendslist has changed.
+  func updateFriendsList() {
+    print("updating friendslist!")
+    print(parse.friendsList)
+    tableView?.reloadData()
+  }
+  
+}
+
+// MARK: TableViewDataSource
+
+extension MainViewController : UITableViewDataSource {
+  
+  /**
+  * Prepare tableView data.
+  */
+  
+  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return parse.friends.count + 1
+  }
+  
+  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    var cell: UITableViewCell
+    if indexPath.row < parse.friendsList.friends.count {
+      cell = tableView.dequeueReusableCellWithIdentifier("cell")!
+      if let friendCell = cell as? MainTableViewCell {
+        friendCell.friend = parse.friendsList.friends[indexPath.row]
+        friendCell.setEditMode(editMode)
+        friendCell.delegate = self
+      }
+    } else { // throw AddFriend row into end of the tableview.
+      cell = tableView.dequeueReusableCellWithIdentifier("addfriend")!
+      addFriendCell = cell as? AddFriendTableViewCell
+      addFriendCell?.delegate = self
+    }
+    // Don't highlight tableview cells
+    cell.selectionStyle = .None
+    return cell
+  }
+}
+
+//MARK: Keyboard
+
+extension MainViewController {
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    NSNotificationCenter.defaultCenter().addObserver(self,
+      selector: "keyboardWillShow:",
+      name: UIKeyboardWillShowNotification,
+      object: nil)
+    
+    NSNotificationCenter.defaultCenter().addObserver(self,
+      selector: "keyboardWillHide:",
+      name: UIKeyboardWillHideNotification,
+      object: nil)
+  }
+  
+  func keyboardWillShow(note: NSNotification) {
+    if let userInfo = note.userInfo {
+      if let keyboardFrameBeginRect: CGRect = userInfo[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue {
+        let keyboardHeight = keyboardFrameBeginRect.size.height
+        let nameLabelContainerHeight = nameLabelContainer.frame.size.height
+        print("\(keyboardHeight)")
+        tableView.contentInset = UIEdgeInsets(top: 0,
+          left: 0,
+          bottom: keyboardHeight - nameLabelContainerHeight,
+          right: 0)
+      }
+    }
+  }
+  
+  func keyboardWillHide(note: NSNotification) {
+    tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+
+}
+
+// MARK: CLLocation
+
+extension MainViewController : CLLocationManagerDelegate {
+  
   @IBAction func getCurrentLocation() {
     switch CLLocationManager.authorizationStatus() {
     case .Authorized, .AuthorizedWhenInUse:
@@ -177,8 +215,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
       locationManager.requestWhenInUseAuthorization()
     case .Restricted, .Denied:
       /*
-        User has not given us permission to use the location services... wat
-       */
+      User has not given us permission to use the location services... wat
+      */
       let alertController = UIAlertController(
         title: "Location Access Disabled :(",
         message: "Please open this app's settings and allow us to use your location so that WhereYou can run properly!",
@@ -224,50 +262,50 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     return (42.333305 + latOffset, -71.100022 + lngOffset)
   }
   
-  /**
-  * Modify Friends list
-  */
-  func addFriend(friend: String) {
-    if let cell = addFriendCell {
-      cell.showInput(false)
-    }
-    
-    parse.addFriend(friend) { friends -> Void in
-      self.tableView.reloadData()
-    }
-  }
-  
-  func deleteFriend(friend: String) {
-    parse.removeFriend(friend)
-    tableView.reloadData()
-  }
-  
-  func adaptivePresentationStyleForPresentationController(controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-    return .None
-  }
 }
 
+// MARK: - TableViewCells
+
 protocol MainTableViewCellDelegate: class {
-  func deleteFriend(friend: String)
+  func deleteFriend(friend: Friend)
+  func respondToFriend(friend: Friend)
 }
 
 class MainTableViewCell: UITableViewCell {
   
+  @IBOutlet weak var background: UIView!
   @IBOutlet weak var label: UILabel!
-  @IBOutlet weak var delete: UIImageView!
+  @IBOutlet weak var delete: UIImageView! {
+    didSet {
+      delete.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onDeleteTap:"))
+      delete.userInteractionEnabled = true
+    }
+  }
+  @IBOutlet weak var asking: UILabel! {
+    didSet {
+      asking.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onAskingTap"))
+      asking.userInteractionEnabled = true
+    }
+  }
   
   weak var delegate: MainTableViewCellDelegate?
   
-  func setFriend(friend: String) {
-    label.text = friend
-    label.textColor = UIColor.whiteColor()
-    label.backgroundColor = UIColor.getRandomColor(friend)
-    delete.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "onDeleteTap:"))
-    delete.userInteractionEnabled = true
+  var friend: Friend? {
+    didSet {
+      print("setting \(friend!)")
+      label.text = friend!.name
+      background.backgroundColor = UIColor.getRandomColor(friend!.name)
+      asking.hidden = !friend!.asking
+    }
   }
   
   func onDeleteTap(gesture: UITapGestureRecognizer) {
-    delegate?.deleteFriend(label.text!)
+    delegate?.deleteFriend(friend!)
+  }
+  
+  func onAskingTap() {
+    delegate?.respondToFriend(friend!)
+    print("tap!")
   }
   
   func setEditMode(editing: Bool) {
